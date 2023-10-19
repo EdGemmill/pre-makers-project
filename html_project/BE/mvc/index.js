@@ -3,6 +3,7 @@ const cors = require("cors");
 const mongoose = require("mongoose");
 const dotenv = require("dotenv");
 const config = require("./config/config");
+const imageController = require('./controllers/imagesController.js')
 
 dotenv.config();
 const app = express();
@@ -15,19 +16,22 @@ app.use(express.json());
 // const exampleRoutes = require("./routes/exampleRoutes");
 // app.use("/api/example", exampleRoutes);
 
-const uri =
-    "mongodb+srv://myAtlasDBUser:Cluster6311@myatlasclusteredu.i3zmnhm.mongodb.net/ImagePost?retryWrites=true&w=majority";
+// const uri =
+//     "mongodb+srv://myAtlasDBUser:Cluster6311@myatlasclusteredu.i3zmnhm.mongodb.net/ImagePost?retryWrites=true&w=majority";
 
-mongoose
-    .connect(uri, {
-        useNewUrlParser: true,
-        useUnifiedTopology: true,
-        useCreateIndex: true,
-    })
-    .then(() => console.log("MongoDB connected"))
-    .catch((err) => console.log(err));
+// mongoose
+//     .connect(uri, {
+//         useNewUrlParser: true,
+//         useUnifiedTopology: true,
+//         useCreateIndex: true,
+//     })
+//     .then(() => console.log("MongoDB connected"))
+//     .catch((err) => console.log(err));
 
 // Start the server
 app.listen(config.port, () => {
     console.log(`Server is running on port ${config.port}`);
 });
+
+
+app.use('images', imageController)

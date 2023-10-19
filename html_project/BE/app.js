@@ -3,6 +3,7 @@ const app = express();
 const bodyParser = require("body-parser");
 const fs = require("fs");
 const path = require("path");
+const ImagePost = require("./mvc//models/imagesModel");
 
 const mongoose = require("mongoose");
 const uri =
@@ -13,17 +14,17 @@ mongoose
     .then(() => console.log("MongoDB connected"))
     .catch((err) => console.log(err));
 
-const newImageSchema = new mongoose.Schema({
-    // author: ObjectId,
-    title: { type: String, required: true },
-    body: { type: String, required: true },
-    postedAt: {
-        type: Date,
-        default: Date.now,
-    },
-});
+// const newImageSchema = new mongoose.Schema({
+//     // author: ObjectId,
+//     title: { type: String, required: true },
+//     body: { type: String, required: true },
+//     postedAt: {
+//         type: Date,
+//         default: Date.now,
+//     },
+// });
 
-const ImagePost = mongoose.model("ImagePost", newImageSchema);
+// const ImagePost = mongoose.model("ImagePost", newImageSchema);
 
 const sunflowers = new ImagePost({
     title: "Sunflowers",
@@ -40,8 +41,8 @@ ImagePost.find()
     .catch((err) => console.log(err));
 
 ImagePost.findOneAndUpdate(
-    { title: "Bedroom in Arles" },
-    { title: "Self portrait", body: "A self portrait" }
+    { title: "Self portrait" },
+    { title: "Bedroom in Arles", body: "Bedroom in the yellow house" }
 )
     .then(() => console.log("Image updated"))
     .catch((err) => console.log(err));
