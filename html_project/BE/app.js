@@ -1,10 +1,12 @@
 const express = require("express");
 const app = express();
+const bodyParser = require("body-parser");
+const fs = require("fs");
+const path = require("path");
 
 const mongoose = require("mongoose");
 const uri =
     "mongodb+srv://myAtlasDBUser:Cluster6311@myatlasclusteredu.i3zmnhm.mongodb.net/ImagePost?retryWrites=true&w=majority";
-
 
 mongoose
     .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
@@ -13,8 +15,8 @@ mongoose
 
 const newImageSchema = new mongoose.Schema({
     // author: ObjectId,
-    title: String,
-    body: String,
+    title: { type: String, required: true },
+    body: { type: String, required: true },
     postedAt: {
         type: Date,
         default: Date.now,
@@ -37,11 +39,13 @@ ImagePost.find()
     .then((images) => console.log(images))
     .catch((err) => console.log(err));
 
-ImagePost.findOneAndUpdate({ title: "Sunflowers" }, { title: "Bedroom in Arles" })
+ImagePost.findOneAndUpdate(
+    { title: "Bedroom in Arles" },
+    { title: "Self portrait", body: "A self portrait" }
+)
     .then(() => console.log("Image updated"))
     .catch((err) => console.log(err));
 
 ImagePost.deleteOne({ title: "Sunflowers" })
     .then(() => console.log("Image deleted"))
     .catch((err) => console.log(err));
-
