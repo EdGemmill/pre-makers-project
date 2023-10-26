@@ -27,6 +27,11 @@
 .App-link {
   color: #61dafb;
 }
+
+.Base {
+  text-align: center;
+}
+
 .head {
   background-image: url("./assests/dwp-digital-logo.jpg");
   background-repeat: no-repeat;

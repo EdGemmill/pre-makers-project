@@ -1,4 +1,4 @@
-const mongoose = require('mongoose')
+const mongoose = require("mongoose");
 const newImageSchema = new mongoose.Schema({
     // author: ObjectId,
     title: { type: String, required: true },
@@ -9,6 +9,4 @@ const newImageSchema = new mongoose.Schema({
     },
 });
 
-const ImagePost = mongoose.model("ImagePost", newImageSchema);
-
-module.exports = ImagePost
+module.exports = ImagePost = mongoose.model("ImagePost", newImageSchema);

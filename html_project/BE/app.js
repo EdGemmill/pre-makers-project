@@ -1,52 +1,21 @@
 const express = require("express");
+const connectDB = require("./mernGuide/config/db");
+const cors = require("cors");
+
 const app = express();
-const bodyParser = require("body-parser");
-const fs = require("fs");
-const path = require("path");
-const ImagePost = require("./mvc//models/imagesModel");
 
-const mongoose = require("mongoose");
-const uri =
-    "mongodb+srv://myAtlasDBUser:Cluster6311@myatlasclusteredu.i3zmnhm.mongodb.net/ImagePost?retryWrites=true&w=majority";
+const images = require("./mernGuide/routes/api/images");
+// Connect Database
+connectDB();
 
-mongoose
-    .connect(uri, { useNewUrlParser: true, useUnifiedTopology: true })
-    .then(() => console.log("MongoDB connected"))
-    .catch((err) => console.log(err));
+app.use(cors({ origin: true, credentials: true }));
 
-// const newImageSchema = new mongoose.Schema({
-//     // author: ObjectId,
-//     title: { type: String, required: true },
-//     body: { type: String, required: true },
-//     postedAt: {
-//         type: Date,
-//         default: Date.now,
-//     },
-// });
+app.use(express.json({ extended: false }));
 
-// const ImagePost = mongoose.model("ImagePost", newImageSchema);
+app.get("/", (req, res) => res.send("I'm in a glass case of emotion"));
 
-const sunflowers = new ImagePost({
-    title: "Sunflowers",
-    body: "A picture of a sunflowers",
-});
+app.use("/", images);
 
-sunflowers
-    .save()
-    .then(() => console.log("image created"))
-    .catch((err) => console.log(err));
+const port = process.env.PORT || 8082;
 
-ImagePost.find()
-    .then((images) => console.log(images))
-    .catch((err) => console.log(err));
-
-ImagePost.findOneAndUpdate(
-    { title: "Self portrait" },
-    { title: "Bedroom in Arles", body: "Bedroom in the yellow house" }
-)
-    .then(() => console.log("Image updated"))
-    .catch((err) => console.log(err));
-
-ImagePost.deleteOne({ title: "Sunflowers" })
-    .then(() => console.log("Image deleted"))
-    .catch((err) => console.log(err));
+app.listen(port, () => console.log(`Server running on port ${port}`));
